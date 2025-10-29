@@ -1,6 +1,6 @@
 import { CartService } from './patterns/creational/CartService.js';
 import { ProductFactory } from './patterns/creational/ProductFactory.js';
-import { GiftWrapDecorator, ExtendedWarrantyDecorator } from './patterns/structural/ProductDecorator.js';
+import { GiftWrapDecorator, ExtendedWarrantyDecorator, BaseProduct } from './patterns/structural/ProductDecorator.js';
 import { CheckoutFacade } from './patterns/structural/CheckoutFacade.js';
 import { ShippingCalculator, FlatRateStrategy, WeightBasedStrategy } from './patterns/behavioral/ShippingStrategy.js';
 import { AddToCartCommand, CommandInvoker } from './patterns/behavioral/Command.js';
@@ -25,31 +25,38 @@ console.log("--- 2B: Factory Pattern ---");
 const factory = new ProductFactory();
 const book = factory.createProduct('book', { title: 'The Pragmatic Programmer', price: 35 });
 const laptop = factory.createProduct('electronic', { model: 'XPS 15', price: 1500 });
-const product = factory.createProduct('omnitrix', { title: 'XLR8', price: 9999 });
+const product1 = factory.createProduct('omnitrix', { title: 'XLR8', price: 999 });
+const product2 = factory.createProduct('omnitrix', { name: 'WaterHazard', price: 999 });
 book.describe();
 laptop.describe();
-product.describe();
+product1.describe();
+product2.describe();
 console.log("\n");
 
 
 // --- Part 3A: Decorator Pattern ---
-// console.log("--- 3A: Decorator Pattern ---");
-// let myBook = factory.createProduct('book', { title: 'Design Patterns', price: 45 });
-// // Wrap the book with a gift wrap decorator
-// myBook = new GiftWrapDecorator(myBook);
-// // Wrap it again with an extended warranty decorator
-// myBook = new ExtendedWarrantyDecorator(myBook);
-// console.log(`Final Price: $${myBook.getPrice()}`);
-// console.log(`Final Description: ${myBook.getDescription()}`);
-// console.log("\n");
+console.log("--- 3A: Decorator Pattern ---");
+let myBook = new BaseProduct('Design Patterns', 45); // Fix
+// Wrap the book with a gift wrap decorator
+myBook = new GiftWrapDecorator(myBook);
+// Wrap it again with an extended warranty decorator
+myBook = new ExtendedWarrantyDecorator(myBook);
+console.log(`Final Price: $${myBook.getPrice()}`);
+console.log(`Final Description: ${myBook.getDescription()}`);
+console.log("\n");
 
 
 // --- Part 3B: Facade Pattern ---
-// console.log("--- 3B: Facade Pattern ---");
-// const checkout = new CheckoutFacade();
-// const orderDetails = { userId: 'user-123', productIds: [1, 3], shippingInfo: '123 Main St' };
-// checkout.placeOrder(orderDetails);
-// console.log("\n");
+console.log("--- 3B: Facade Pattern ---");
+const checkout = new CheckoutFacade();
+const orderDetails = {
+    userId: 'user-123',
+    productIds: [1, 3],
+    shippingInfo: '123 Main St',
+    amount: 200
+};
+checkout.placeOrder(orderDetails);
+console.log("\n");
 
 
 // --- Part 4A: Strategy Pattern ---

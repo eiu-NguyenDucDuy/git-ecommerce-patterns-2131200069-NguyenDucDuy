@@ -11,7 +11,7 @@ var instance = null;
 class CartService {
     constructor() {
         // ... your implementation here ...
-        if(instance) {
+        if (instance) {
             return instance;
         }
         this.products = [];
