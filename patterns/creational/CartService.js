@@ -6,8 +6,6 @@
 //    and assign the new instance to `instance`.
 // 5. Export the class.
 
-var instance = null;
-
 class CartService {
     constructor() {
         // ... your implementation here ...
